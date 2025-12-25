@@ -62,11 +62,10 @@ const MOCK_DATA: LandingPageCopy = {
 };
 
 // Check if API Key exists.
-const apiKey = process.env.API_KEY;
-const ai = apiKey ? new GoogleGenAI({ apiKey }) : null;
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 // Export status check for UI
-export const isApiConfigured = () => !!apiKey;
+export const isApiConfigured = () => !!process.env.API_KEY;
 
 const landingPageSchema: Schema = {
   type: Type.OBJECT,
@@ -189,7 +188,7 @@ const landingPageSchema: Schema = {
 
 export const generateLandingPageCopy = async (input: ProductInput): Promise<LandingPageCopy> => {
   // FALLBACK: If no API key is present, return mock data immediately.
-  if (!ai) {
+  if (!isApiConfigured()) {
     console.warn("No API Key found. Returning mock data.");
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 1500));
@@ -234,7 +233,7 @@ export const generateLandingPageCopy = async (input: ProductInput): Promise<Land
 
 export const regenerateSection = async (sectionName: string, currentContent: any, input: ProductInput): Promise<any> => {
   // FALLBACK: If no API key, just return the current content (no regeneration).
-  if (!ai) {
+  if (!isApiConfigured()) {
     console.warn("No API Key found. Cannot regenerate.");
     return currentContent;
   }
