@@ -6,7 +6,7 @@ export const MarketingHome: React.FC = () => {
   return (
     <div className="bg-white dark:bg-slate-950 transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative pt-20 pb-28 md:pt-32 md:pb-40 overflow-hidden bg-white dark:bg-slate-950">
+      <section className="relative pt-12 pb-20 md:pt-24 md:pb-32 overflow-hidden bg-white dark:bg-slate-950">
         <div className="absolute top-0 left-0 right-0 h-[600px] bg-[radial-gradient(circle_at_50%_0%,_var(--tw-gradient-stops))] from-indigo-50 via-white to-white dark:from-indigo-950/30 dark:via-slate-950 dark:to-slate-950 opacity-100 -z-10"></div>
         <div className="absolute top-[10%] left-[5%] w-72 h-72 bg-purple-200/30 dark:bg-purple-900/20 rounded-full blur-3xl -z-10 animate-pulse"></div>
         <div className="absolute top-[15%] right-[10%] w-96 h-96 bg-blue-200/30 dark:bg-blue-900/20 rounded-full blur-3xl -z-10 animate-pulse delay-700"></div>
