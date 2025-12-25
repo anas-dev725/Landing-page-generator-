@@ -34,50 +34,50 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 transition-colors">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700 transition-colors">
         <div className="p-8 md:p-10">
           <div className="text-center mb-10">
             <Link to="/" className="inline-flex items-center gap-2 group mb-6">
-                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
+                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 dark:bg-indigo-600 text-white shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
                     <Rocket className="h-6 w-6 fill-current" />
                 </div>
             </Link>
-            <h1 className="text-3xl font-display font-bold text-slate-900 mb-2">
+            <h1 className="text-3xl font-display font-bold text-slate-900 dark:text-white mb-2">
               {isLogin ? 'Welcome back' : 'Create account'}
             </h1>
-            <p className="text-slate-500">
+            <p className="text-slate-500 dark:text-slate-400">
               {isLogin ? 'Enter your details to access your dashboard.' : 'Start generating high-converting copy today.'}
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="p-4 bg-red-50 text-red-600 text-sm rounded-xl border border-red-100 font-medium">
+              <div className="p-4 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-sm rounded-xl border border-red-100 dark:border-red-900 font-medium">
                 {error}
               </div>
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700 ml-1">Username</label>
+              <label className="text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">Username</label>
               <input 
                 type="text" 
                 required
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
+                className="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
                 placeholder="Enter your username"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-bold text-slate-700 ml-1">Password</label>
+              <label className="text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">Password</label>
               <input 
                 type="password" 
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
+                className="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
                 placeholder="Enter your password"
               />
             </div>
@@ -85,7 +85,7 @@ export const Login: React.FC = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+              className="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 dark:shadow-indigo-900/50 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
             >
               {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : (
                 <>
@@ -96,18 +96,18 @@ export const Login: React.FC = () => {
           </form>
 
           <div className="mt-8 text-center">
-            <p className="text-slate-500 text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               {isLogin ? "Don't have an account? " : "Already have an account? "}
               <button 
                 onClick={() => { setIsLogin(!isLogin); setError(''); }}
-                className="text-indigo-600 font-bold hover:underline"
+                className="text-indigo-600 dark:text-indigo-400 font-bold hover:underline"
               >
                 {isLogin ? 'Sign up' : 'Log in'}
               </button>
             </p>
           </div>
         </div>
-        <div className="bg-slate-50 p-6 text-center text-xs text-slate-400 border-t border-slate-100">
+        <div className="bg-slate-50 dark:bg-slate-950 p-6 text-center text-xs text-slate-400 border-t border-slate-100 dark:border-slate-800">
             &copy; {new Date().getFullYear()} LaunchCopy. All rights reserved.
         </div>
       </div>

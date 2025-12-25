@@ -117,39 +117,39 @@ export const Generator: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 sticky top-[80px] z-30 bg-slate-50/90 backdrop-blur py-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 sticky top-[80px] z-30 bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur py-4 transition-colors">
         <div className="flex items-center gap-4">
             <button 
                 onClick={() => navigate('/app')}
-                className="p-2 rounded-full hover:bg-white hover:shadow-sm text-slate-500 hover:text-indigo-600 transition-all"
+                className="p-2 rounded-full hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all"
             >
                 <ArrowLeft className="h-5 w-5" />
             </button>
             <div>
-                <h1 className="text-2xl font-display font-bold text-slate-900">{form.name || "Untitled Project"}</h1>
-                <p className="text-xs text-slate-500 font-medium">{id ? "Last saved just now" : "Unsaved draft"}</p>
+                <h1 className="text-2xl font-display font-bold text-slate-900 dark:text-white">{form.name || "Untitled Project"}</h1>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{id ? "Last saved just now" : "Unsaved draft"}</p>
             </div>
         </div>
         
         <div className="flex items-center gap-3">
              {/* Toggle View */}
              {result && (
-                <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+                <div className="flex bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
                     <button 
                         onClick={() => setView('edit')}
-                        className={`flex items-center gap-2 px-3 py-2 text-sm font-bold rounded-lg transition-colors ${view === 'edit' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-900'}`}
+                        className={`flex items-center gap-2 px-3 py-2 text-sm font-bold rounded-lg transition-colors ${view === 'edit' ? 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                     >
                         <Wand2 className="h-4 w-4" /> Inputs
                     </button>
                     <button 
                         onClick={() => setView('copy')}
-                        className={`flex items-center gap-2 px-3 py-2 text-sm font-bold rounded-lg transition-colors ${view === 'copy' ? 'bg-slate-100 text-slate-900' : 'text-slate-500 hover:text-slate-900'}`}
+                        className={`flex items-center gap-2 px-3 py-2 text-sm font-bold rounded-lg transition-colors ${view === 'copy' ? 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                     >
                         <FileText className="h-4 w-4" /> Copy
                     </button>
                     <button 
                         onClick={() => setView('preview')}
-                        className={`flex items-center gap-2 px-3 py-2 text-sm font-bold rounded-lg transition-colors ${view === 'preview' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 hover:text-slate-900'}`}
+                        className={`flex items-center gap-2 px-3 py-2 text-sm font-bold rounded-lg transition-colors ${view === 'preview' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
                     >
                         <MonitorPlay className="h-4 w-4" /> Preview
                     </button>
@@ -159,7 +159,7 @@ export const Generator: React.FC = () => {
             <button 
                 onClick={handleGenerate}
                 disabled={loading || !form.name || !form.problem} 
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold shadow-lg transition-all ${loading ? 'bg-slate-200 text-slate-500 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-indigo-200'}`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold shadow-lg transition-all ${loading ? 'bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-500 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-indigo-200 dark:hover:shadow-indigo-900'}`}
             >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin"/> : <Sparkles className="h-4 w-4" />}
                 {result ? 'Regenerate' : 'Generate Page'}
@@ -171,7 +171,7 @@ export const Generator: React.FC = () => {
         
         {/* INPUT COLUMN */}
         <div className={`${view === 'edit' ? 'lg:col-span-12 max-w-3xl mx-auto' : 'hidden'} w-full`}>
-             <div className="bg-slate-900 rounded-3xl shadow-2xl border border-slate-800 p-8 md:p-10 relative overflow-hidden">
+             <div className="bg-slate-900 dark:bg-slate-800 rounded-3xl shadow-2xl border border-slate-800 dark:border-slate-700 p-8 md:p-10 relative overflow-hidden transition-colors">
                 <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
                     <Layout className="h-48 w-48 text-white" />
                 </div>
@@ -196,7 +196,7 @@ export const Generator: React.FC = () => {
                        type="text" 
                        value={form.name}
                        onChange={(e) => setForm({...form, name: e.target.value})}
-                       className="w-full px-5 py-4 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-600 font-medium text-lg"
+                       className="w-full px-5 py-4 rounded-xl bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-600 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-600 font-medium text-lg"
                        placeholder="e.g. LaunchCopy"
                      />
                    </div>
@@ -207,7 +207,7 @@ export const Generator: React.FC = () => {
                        <select 
                          value={form.tone}
                          onChange={(e) => setForm({...form, tone: e.target.value as Tone})}
-                         className="w-full px-5 py-4 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none appearance-none transition-all font-medium text-lg"
+                         className="w-full px-5 py-4 rounded-xl bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-600 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none appearance-none transition-all font-medium text-lg"
                        >
                          {Object.values(Tone).map((t) => (
                            <option key={t} value={t}>{t}</option>
@@ -259,7 +259,7 @@ export const Generator: React.FC = () => {
                      type="text" 
                      value={form.audience}
                      onChange={(e) => setForm({...form, audience: e.target.value})}
-                     className="w-full px-5 py-4 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-600 text-lg"
+                     className="w-full px-5 py-4 rounded-xl bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-600 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-600 text-lg"
                      placeholder="e.g. Indie hackers, busy parents, enterprise CTOs..."
                    />
                  </div>
@@ -269,7 +269,7 @@ export const Generator: React.FC = () => {
                    <textarea 
                      value={form.problem}
                      onChange={(e) => setForm({...form, problem: e.target.value})}
-                     className="w-full px-5 py-4 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[120px] placeholder:text-slate-600 resize-y text-lg"
+                     className="w-full px-5 py-4 rounded-xl bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-600 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[120px] placeholder:text-slate-600 resize-y text-lg"
                      placeholder="Describe the struggle your users face before using your product..."
                    />
                  </div>
@@ -279,7 +279,7 @@ export const Generator: React.FC = () => {
                    <textarea 
                      value={form.features}
                      onChange={(e) => setForm({...form, features: e.target.value})}
-                     className="w-full px-5 py-4 rounded-xl bg-slate-800/50 border border-slate-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[120px] placeholder:text-slate-600 resize-y text-lg"
+                     className="w-full px-5 py-4 rounded-xl bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-600 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[120px] placeholder:text-slate-600 resize-y text-lg"
                      placeholder="List your main features or benefits (e.g. One-click setup, 24/7 support)..."
                    />
                  </div>
@@ -320,8 +320,8 @@ export const Generator: React.FC = () => {
                   ))}
                </div>
              ) : (
-                <div className="flex flex-col items-center justify-center py-32 bg-white rounded-2xl border border-dashed border-slate-200">
-                    <p className="text-slate-500 font-medium">No copy generated yet.</p>
+                <div className="flex flex-col items-center justify-center py-32 bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                    <p className="text-slate-500 dark:text-slate-400 font-medium">No copy generated yet.</p>
                 </div>
              )}
            </div>
@@ -333,8 +333,8 @@ export const Generator: React.FC = () => {
                 {result ? (
                     <LandingPagePreview data={result} theme={form.colorTheme} />
                 ) : (
-                    <div className="flex flex-col items-center justify-center py-32 bg-white rounded-2xl border border-dashed border-slate-200">
-                        <p className="text-slate-500 font-medium">Generate content to see the preview.</p>
+                    <div className="flex flex-col items-center justify-center py-32 bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                        <p className="text-slate-500 dark:text-slate-400 font-medium">Generate content to see the preview.</p>
                     </div>
                 )}
             </div>

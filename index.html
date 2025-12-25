@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -56,6 +57,12 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #94a3b8;
       }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #475569;
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
+      }
     </style>
   <script type="importmap">
 {
@@ -72,7 +79,7 @@
 }
 </script>
 </head>
-  <body class="bg-slate-50 text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
+  <body class="bg-slate-50 text-slate-900 selection:bg-indigo-100 selection:text-indigo-900 dark:bg-slate-950 dark:text-slate-50 dark:selection:bg-indigo-900 dark:selection:text-indigo-100">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
