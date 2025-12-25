@@ -213,19 +213,19 @@ export const LandingPagePreview: React.FC<Props> = ({ data, theme = 'indigo' }) 
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 text-center mb-16">{data.socialProof.headline}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {data.socialProof.testimonials.map((t, i) => (
+              {data.socialProof.testimonials.map((testimonial, i) => (
                 <div key={i} className="p-8 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
                   <div className="flex gap-1 mb-6 text-amber-400">
                     {[1,2,3,4,5].map(s => <Star key={s} className="h-4 w-4 fill-current" />)}
                   </div>
-                  <p className="text-slate-700 mb-6 italic text-lg leading-relaxed">"{t.quote}"</p>
+                  <p className="text-slate-700 mb-6 italic text-lg leading-relaxed">"{testimonial.quote}"</p>
                   <div className="flex items-center gap-4">
                      <div className={`w-10 h-10 rounded-full ${t.secondary} ${t.text} flex items-center justify-center font-bold`}>
-                        {t.name.charAt(0)}
+                        {testimonial.name.charAt(0)}
                      </div>
                      <div>
-                        <div className="font-bold text-slate-900">{t.name}</div>
-                        <div className="text-sm text-slate-500">{t.role}</div>
+                        <div className="font-bold text-slate-900">{testimonial.name}</div>
+                        <div className="text-sm text-slate-500">{testimonial.role}</div>
                      </div>
                   </div>
                 </div>
