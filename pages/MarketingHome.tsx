@@ -1,8 +1,33 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Sparkles, Check, Zap, Target, ArrowRight, LayoutTemplate, Shield, MousePointer2, XCircle, Star, Quote } from 'lucide-react';
+import { getCurrentUser } from '../services/authService';
 
 export const MarketingHome: React.FC = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = getCurrentUser();
+    if (user) {
+      navigate('/app', { replace: true });
+    }
+  }, [navigate]);
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <div className="bg-white dark:bg-slate-950 transition-colors duration-300">
       {/* Hero Section */}
@@ -30,7 +55,11 @@ export const MarketingHome: React.FC = () => {
             <Link to="/app/create" className="w-full sm:w-auto px-8 py-4 bg-slate-900 dark:bg-indigo-600 text-white font-bold rounded-2xl shadow-xl shadow-slate-300/50 dark:shadow-indigo-900/30 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:-translate-y-1 transition-all flex items-center justify-center gap-2 text-lg">
               Start Writing for Free <ArrowRight className="h-5 w-5" />
             </Link>
-            <a href="#process" className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex items-center justify-center shadow-sm">
+            <a 
+              href="#process" 
+              onClick={(e) => scrollToSection(e, 'process')}
+              className="w-full sm:w-auto px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 font-bold rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all flex items-center justify-center shadow-sm"
+            >
               See How It Works
             </a>
           </div>
@@ -108,7 +137,7 @@ export const MarketingHome: React.FC = () => {
       </div>
 
       {/* PROBLEM SECTION */}
-      <section id="problem" className="py-32 bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden">
+      <section id="problem" className="py-32 bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden scroll-mt-24">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-900/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
         
         <div className="container mx-auto px-4 relative z-10">
@@ -166,7 +195,7 @@ export const MarketingHome: React.FC = () => {
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="py-32 bg-white dark:bg-slate-950">
+      <section id="features" className="py-32 bg-white dark:bg-slate-950 scroll-mt-24">
         <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-20">
                 <div className="inline-block bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-900/50 text-indigo-600 dark:text-indigo-400 px-4 py-1.5 rounded-full text-sm font-bold mb-6">
@@ -222,7 +251,7 @@ export const MarketingHome: React.FC = () => {
       </section>
 
       {/* Process Section */}
-      <section id="process" className="py-32 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800 overflow-hidden">
+      <section id="process" className="py-32 bg-slate-50 dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800 overflow-hidden scroll-mt-24">
         <div className="container mx-auto px-4 relative z-10">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
                 <div className="order-2 lg:order-1 relative">
@@ -290,7 +319,7 @@ export const MarketingHome: React.FC = () => {
       </section>
 
       {/* TESTIMONIALS SECTION */}
-      <section id="testimonials" className="py-32 bg-white dark:bg-slate-950">
+      <section id="testimonials" className="py-32 bg-white dark:bg-slate-950 scroll-mt-24">
         <div className="container mx-auto px-4">
             <div className="text-center max-w-3xl mx-auto mb-20">
                 <h2 className="text-4xl font-display font-bold text-slate-900 dark:text-white mb-6">Loved by Builders</h2>

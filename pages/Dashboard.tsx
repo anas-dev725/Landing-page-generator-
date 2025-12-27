@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Clock, FileText, ArrowRight, Trash2, Search } from 'lucide-react';
+import { Plus, Clock, FileText, ArrowRight, Trash2, Search, Download } from 'lucide-react';
 import { getProjects, deleteProject } from '../services/storageService';
-import { Project } from '../types';
+import { Project, LandingPageCopy } from '../types';
 
 export const Dashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -18,6 +18,58 @@ export const Dashboard: React.FC = () => {
       deleteProject(id);
       setProjects(getProjects());
     }
+  };
+
+  const handleExport = (e: React.MouseEvent, project: Project) => {
+    e.preventDefault();
+    if (!project.copy) return;
+
+    const copy = project.copy;
+    const formatSection = (title: string, data: any) => {
+      let text = `=== ${title.toUpperCase()} ===\n`;
+      if (typeof data === 'string') return text + data + '\n\n';
+      
+      // Basic formatting for different section structures
+      Object.entries(data).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          text += `${key.toUpperCase()}:\n`;
+          value.forEach((v: any) => {
+            if (typeof v === 'object') {
+              text += `  - ${Object.values(v).join(': ')}\n`;
+            } else {
+              text += `  - ${v}\n`;
+            }
+          });
+        } else {
+          text += `${key.toUpperCase()}: ${value}\n`;
+        }
+      });
+      return text + '\n';
+    };
+
+    let fullText = `LAUNCHCOPY EXPORT: ${project.name}\n`;
+    fullText += `Target Audience: ${project.input.audience}\n`;
+    fullText += `Tone: ${project.input.tone}\n`;
+    fullText += `Generated at: ${new Date(project.updatedAt).toLocaleString()}\n\n`;
+
+    fullText += formatSection('Hero', copy.hero);
+    fullText += formatSection('Problem', copy.problem);
+    fullText += formatSection('Solution', copy.solution);
+    fullText += formatSection('Features', copy.features);
+    fullText += formatSection('How It Works', copy.howItWorks);
+    fullText += formatSection('Social Proof', copy.socialProof);
+    fullText += formatSection('FAQ', copy.faq);
+    fullText += formatSection('Call to Action', copy.cta);
+
+    const blob = new Blob([fullText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${project.name.replace(/\s+/g, '_')}_copy.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   const filteredProjects = projects.filter(p => 
@@ -86,10 +138,17 @@ export const Dashboard: React.FC = () => {
               key={project.id}
               className="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm hover:shadow-xl hover:border-indigo-200 dark:hover:border-indigo-800 transition-all relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                 <button 
+                    onClick={(e) => handleExport(e, project)}
+                    className="p-2 bg-white dark:bg-slate-800 text-slate-400 hover:text-indigo-600 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700 transition-colors"
+                    title="Export as Text"
+                 >
+                    <Download className="h-4 w-4" />
+                 </button>
                  <button 
                     onClick={(e) => handleDelete(e, project.id)}
-                    className="p-2 bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700"
+                    className="p-2 bg-white dark:bg-slate-800 text-slate-400 hover:text-red-500 rounded-lg shadow-sm border border-slate-100 dark:border-slate-700 transition-colors"
                     title="Delete Project"
                  >
                     <Trash2 className="h-4 w-4" />

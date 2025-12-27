@@ -6,7 +6,7 @@ import { getCurrentUser } from '../services/authService';
 import { ProductInput, LandingPageCopy, Tone, Project, ColorTheme } from '../types';
 import { SectionCard } from '../components/SectionCard';
 import { LandingPagePreview } from '../components/LandingPagePreview';
-import { Sparkles, ArrowLeft, Loader2, Save, Layout, Wand2, Eye, FileText, MonitorPlay, Palette, Check } from 'lucide-react';
+import { Sparkles, ArrowLeft, Loader2, Layout, Wand2, FileText, MonitorPlay, Palette, Check, Download } from 'lucide-react';
 
 const initialFormState: ProductInput = {
   name: '',
@@ -51,6 +51,55 @@ export const Generator: React.FC = () => {
       tone: Tone.PROFESSIONAL,
       colorTheme: 'blue'
     });
+  };
+
+  const handleExport = () => {
+    if (!result) return;
+
+    const formatSection = (title: string, data: any) => {
+      let text = `=== ${title.toUpperCase()} ===\n`;
+      if (typeof data === 'string') return text + data + '\n\n';
+      
+      Object.entries(data).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          text += `${key.toUpperCase()}:\n`;
+          value.forEach((v: any) => {
+            if (typeof v === 'object') {
+              text += `  - ${Object.values(v).join(': ')}\n`;
+            } else {
+              text += `  - ${v}\n`;
+            }
+          });
+        } else {
+          text += `${key.toUpperCase()}: ${value}\n`;
+        }
+      });
+      return text + '\n';
+    };
+
+    let fullText = `LAUNCHCOPY EXPORT: ${form.name}\n`;
+    fullText += `Target Audience: ${form.audience}\n`;
+    fullText += `Tone: ${form.tone}\n`;
+    fullText += `Generated at: ${new Date().toLocaleString()}\n\n`;
+
+    fullText += formatSection('Hero', result.hero);
+    fullText += formatSection('Problem', result.problem);
+    fullText += formatSection('Solution', result.solution);
+    fullText += formatSection('Features', result.features);
+    fullText += formatSection('How It Works', result.howItWorks);
+    fullText += formatSection('Social Proof', result.socialProof);
+    fullText += formatSection('FAQ', result.faq);
+    fullText += formatSection('Call to Action', result.cta);
+
+    const blob = new Blob([fullText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${form.name.replace(/\s+/g, '_')}_copy.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   const handleGenerate = async () => {
@@ -134,7 +183,8 @@ export const Generator: React.FC = () => {
         <div className="flex items-center gap-3">
              {/* Toggle View */}
              {result && (
-                <div className="flex bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                <>
+                <div className="flex bg-white dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm mr-2">
                     <button 
                         onClick={() => setView('edit')}
                         className={`flex items-center gap-2 px-3 py-2 text-sm font-bold rounded-lg transition-colors ${view === 'edit' ? 'bg-slate-100 dark:bg-slate-700 text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}
@@ -154,6 +204,16 @@ export const Generator: React.FC = () => {
                         <MonitorPlay className="h-4 w-4" /> Preview
                     </button>
                 </div>
+                
+                <button 
+                    onClick={handleExport}
+                    className="flex items-center gap-2 px-4 py-3 rounded-xl font-bold bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all shadow-sm"
+                    title="Export all sections as .txt"
+                >
+                    <Download className="h-4 w-4" />
+                    <span className="hidden sm:inline">Export</span>
+                </button>
+                </>
              )}
              
             <button 
@@ -237,7 +297,6 @@ export const Generator: React.FC = () => {
                                  style={{ backgroundColor: `var(--color-${color}-500)` }}
                                  title={color.charAt(0).toUpperCase() + color.slice(1)}
                              >
-                                 {/* Simple colored circle simulation since we can't do var injection easily in tailwind arbitrarily without classes */}
                                  <div className={`w-full h-full rounded-full 
                                      ${color === 'indigo' ? 'bg-indigo-500' : ''}
                                      ${color === 'blue' ? 'bg-blue-500' : ''}
@@ -285,7 +344,6 @@ export const Generator: React.FC = () => {
                  </div>
                </div>
              </div>
-             {/* If no result yet, hint at action */}
              {!result && (
                 <div className="text-center mt-8 text-slate-400 font-medium">
                     Fill in the details above and click Generate to start.
@@ -298,7 +356,6 @@ export const Generator: React.FC = () => {
             <div className="lg:col-span-12 max-w-3xl mx-auto w-full">
              {result ? (
                <div className="space-y-6">
-                  {/* We map over the known keys to maintain order */}
                   {[
                     { key: 'hero', label: 'Hero Section' },
                     { key: 'problem', label: 'Problem Section' },
@@ -313,9 +370,6 @@ export const Generator: React.FC = () => {
                       key={key}
                       title={label}
                       content={formatSectionContent(result[key as keyof LandingPageCopy], key)}
-                      onRegenerate={() => {
-                        console.log("Regenerate section triggered");
-                      }}
                     />
                   ))}
                </div>
