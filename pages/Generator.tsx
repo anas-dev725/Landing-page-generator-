@@ -134,7 +134,7 @@ export const Generator: React.FC = () => {
       // Automatically switch to preview to show the "Whole page" generated
       setView('preview');
     } catch (error) {
-      alert("Failed to generate content. Please try again.");
+      alert("Failed to generate content. Please ensure your API key is configured.");
     } finally {
       setLoading(false);
     }
@@ -356,6 +356,25 @@ export const Generator: React.FC = () => {
             <div className="lg:col-span-12 max-w-3xl mx-auto w-full">
              {result ? (
                <div className="space-y-6">
+                  {/* Added prominent export button here */}
+                  <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-900/50 rounded-xl p-4 flex justify-between items-center mb-6">
+                     <div className="flex items-center gap-3">
+                        <div className="bg-indigo-600 text-white p-2 rounded-lg">
+                           <FileText className="h-5 w-5" />
+                        </div>
+                        <div>
+                           <h3 className="font-bold text-slate-900 dark:text-white">Generated Copy</h3>
+                           <p className="text-xs text-slate-500 dark:text-slate-400">Review, edit, and export your content.</p>
+                        </div>
+                     </div>
+                     <button 
+                        onClick={handleExport}
+                        className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition-all text-sm"
+                     >
+                        <Download className="h-4 w-4" /> Download Full Copy
+                     </button>
+                  </div>
+
                   {[
                     { key: 'hero', label: 'Hero Section' },
                     { key: 'problem', label: 'Problem Section' },

@@ -12,8 +12,8 @@ export default defineConfig(({ mode }) => {
       port: 3000
     },
     define: {
-      // Fallback to empty string if undefined to prevent build errors, though app needs key to work
-      'process.env.API_KEY': JSON.stringify(env.API_KEY || '')
+      // Prioritize GEMINI_API_KEY as requested, fallback to API_KEY, then empty string
+      'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY || env.API_KEY || '')
     }
   };
 });

@@ -1,17 +1,9 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Sparkles, Check, Zap, Target, ArrowRight, LayoutTemplate, Shield, MousePointer2, XCircle, Star, Quote } from 'lucide-react';
-import { getCurrentUser } from '../services/authService';
 
 export const MarketingHome: React.FC = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const user = getCurrentUser();
-    if (user) {
-      navigate('/app', { replace: true });
-    }
-  }, [navigate]);
+  // Automatic redirect removed as requested so users land on the home page
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();

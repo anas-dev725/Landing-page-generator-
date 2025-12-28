@@ -4,7 +4,11 @@ import { Rocket, Loader2, ArrowRight } from 'lucide-react';
 import { login, register, getCurrentUser } from '../services/authService';
 
 export const Login: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  // Check if any users exist in local storage to default to Login view
+  const [isLogin, setIsLogin] = useState(() => {
+    return !!localStorage.getItem('launchcopy_users');
+  });
+  
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
