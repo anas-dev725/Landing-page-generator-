@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Rocket, Loader2, ArrowRight } from 'lucide-react';
+import { Rocket, Loader2, ArrowRight, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { login, register, getCurrentUser } from '../services/authService';
 
 export const Login: React.FC = () => {
@@ -11,6 +11,7 @@ export const Login: React.FC = () => {
   
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -33,9 +34,9 @@ export const Login: React.FC = () => {
 
     try {
       if (isLogin) {
-        login(username, password);
+        login(username.trim(), password.trim());
       } else {
-        register(username, password);
+        register(username.trim(), password.trim());
       }
       navigate('/app');
     } catch (err: any) {
@@ -46,7 +47,18 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-4 transition-colors relative">
+      
+      {/* Back to Home Button */}
+      <div className="absolute top-6 left-6 md:top-8 md:left-8 z-10">
+        <Link 
+            to="/" 
+            className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400 font-bold transition-colors bg-white/50 dark:bg-slate-900/50 px-4 py-2 rounded-full backdrop-blur-sm border border-slate-200 dark:border-slate-800 hover:border-indigo-200 dark:hover:border-indigo-800"
+        >
+            <ArrowLeft className="h-4 w-4" /> Back to Home
+        </Link>
+      </div>
+
       <div className="max-w-md w-full bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-100 dark:border-slate-800 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700 transition-colors">
         <div className="p-8 md:p-10">
           <div className="text-center mb-10">
@@ -84,14 +96,24 @@ export const Login: React.FC = () => {
 
             <div className="space-y-2">
               <label className="text-sm font-bold text-slate-700 dark:text-slate-300 ml-1">Password</label>
-              <input 
-                type="password" 
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium"
-                placeholder="Enter your password"
-              />
+              <div className="relative">
+                <input 
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-medium pr-12"
+                    placeholder="Enter your password"
+                />
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                    tabIndex={-1}
+                >
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
             </div>
 
             <button 

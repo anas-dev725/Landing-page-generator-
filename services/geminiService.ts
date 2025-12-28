@@ -139,12 +139,16 @@ export const generateLandingPageCopy = async (input: ProductInput): Promise<Land
     Product Name: ${input.name}
     Target Audience: ${input.audience}
     Problem Solved: ${input.problem}
-    Key Features: ${input.features}
     Desired Tone: ${input.tone}
 
-    The copy should be benefit-driven, concise, and persuasive. Avoid fluff.
-    Include a FAQ section with 3-5 relevant questions and answers.
-    Structure the response exactly according to the provided JSON schema.
+    Instructions:
+    1. Infer 3 key product features that solve the user's problem effectively.
+    2. The copy should be benefit-driven, concise, and persuasive. Avoid fluff.
+    3. IMPORTANT: The "problem" section must contain EXACTLY 3 distinct pain points.
+    4. IMPORTANT: The "features" section must contain EXACTLY 3 items.
+    5. IMPORTANT: The "socialProof" section must contain EXACTLY 3 testimonials.
+    6. Include a FAQ section with 3-5 relevant questions and answers.
+    7. Structure the response exactly according to the provided JSON schema.
   `;
 
   try {

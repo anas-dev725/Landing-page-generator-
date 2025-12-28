@@ -12,7 +12,6 @@ export interface ProductInput {
   name: string;
   audience: string;
   problem: string;
-  features: string;
   tone: Tone;
   colorTheme: ColorTheme;
 }

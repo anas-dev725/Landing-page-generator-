@@ -12,7 +12,6 @@ const initialFormState: ProductInput = {
   name: '',
   audience: '',
   problem: '',
-  features: '',
   tone: Tone.PROFESSIONAL,
   colorTheme: 'indigo'
 };
@@ -47,7 +46,6 @@ export const Generator: React.FC = () => {
       name: "TaskFlow",
       audience: "Remote project managers and agile teams",
       problem: "Existing project management tools are too complex, slow, and cluttered with features nobody uses.",
-      features: "AI-prioritized task lists, 1-click status updates, Minimalist distraction-free UI, Slack integration",
       tone: Tone.PROFESSIONAL,
       colorTheme: 'blue'
     });
@@ -330,16 +328,6 @@ export const Generator: React.FC = () => {
                      onChange={(e) => setForm({...form, problem: e.target.value})}
                      className="w-full px-5 py-4 rounded-xl bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-600 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[120px] placeholder:text-slate-600 resize-y text-lg"
                      placeholder="Describe the struggle your users face before using your product..."
-                   />
-                 </div>
-     
-                 <div className="space-y-3">
-                   <label className="text-sm font-bold text-slate-300 uppercase tracking-wider">Key Features <span className="text-slate-500 font-normal ml-1 normal-case tracking-normal">(How do you solve it?)</span></label>
-                   <textarea 
-                     value={form.features}
-                     onChange={(e) => setForm({...form, features: e.target.value})}
-                     className="w-full px-5 py-4 rounded-xl bg-slate-800/50 dark:bg-slate-900/50 border border-slate-700 dark:border-slate-600 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all min-h-[120px] placeholder:text-slate-600 resize-y text-lg"
-                     placeholder="List your main features or benefits (e.g. One-click setup, 24/7 support)..."
                    />
                  </div>
                </div>
